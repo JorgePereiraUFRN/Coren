@@ -22,16 +22,13 @@ public class GenericWidget extends Widget {
 
 	@Override
 	protected void init() {
-
-		addAttribute(AttributeNameValue.instance("constante", id), true);
 		
 		for (GenericAtribute a : atributes) {
 
-			System.out.println("tipo: "+a.getAtribute_type()+" nome: "+a.getAtribute_name());
 			
 			if (a.getAtribute_type() instanceof Integer) {
 				addAttribute(Attribute.instance(a.getAtribute_name(), Integer.class));
-				System.out.println("criou o inteiro");
+
 			} else if (a.getAtribute_type() instanceof String) {
 				addAttribute(Attribute.instance(a.getAtribute_name(), String.class));
 			}else if (a.getAtribute_type() instanceof Boolean) {

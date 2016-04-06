@@ -24,6 +24,7 @@ public class GenericEnactor extends Enactor {
 		AttributeComparison atComparison = null;
 
 		if (query.getBaseValue() instanceof Integer) {
+
 			attributeElement = new NonConstantAttributeElement(AttributeNameValue
 					.instance(query.getGenericAtribute().getAtribute_name(), (Integer) query.getBaseValue()));
 		} else if (query.getBaseValue() instanceof String) {
@@ -60,9 +61,10 @@ public class GenericEnactor extends Enactor {
 		AbstractQueryItem<?, ?> queryitem = new ORQueryItem(RuleQueryItem.instance(attributeElement, atComparison));
 
 		EnactorReference er = new GenericEnactorReference(this, queryitem, "mensagem");
+		
 		er.addServiceInput(new ServiceInput("GenericService", "generic", new Attributes() {
 			{
-				addAttribute("temperatura", Integer.class);
+				addAttribute("mensagem", String.class);
 			}
 		}));
 		addReference(er);

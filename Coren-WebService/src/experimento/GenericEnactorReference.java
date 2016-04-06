@@ -17,11 +17,9 @@ public class GenericEnactorReference extends EnactorReference {
 	}
 	
 	
-	
 	protected Attributes conditionSatisfied(ComponentDescription inWidgetState, Attributes outAtts) {
 		
-		long timestamp = outAtts.getAttributeValue(Widget.TIMESTAMP);
-		
+		//long timestamp = outAtts.getAttributeValue(Widget.TIMESTAMP);
 				
 		outAtts.add(AttributeNameValue.instance("mensagem", "mensagem atualizada"));
 

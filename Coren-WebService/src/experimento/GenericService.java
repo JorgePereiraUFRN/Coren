@@ -1,6 +1,5 @@
 package experimento;
 
-import context.arch.comm.CommunicationsHandler;
 import context.arch.comm.DataObject;
 import context.arch.service.Service;
 import context.arch.service.helper.FunctionDescription;
