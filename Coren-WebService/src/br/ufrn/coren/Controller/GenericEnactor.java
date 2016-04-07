@@ -1,5 +1,7 @@
-package experimento;
+package br.ufrn.coren.Controller;
 
+import br.ufrn.coren.Entities.Query;
+import br.ufrn.coren.Entities.QueryComparassion;
 import context.arch.discoverer.component.NonConstantAttributeElement;
 import context.arch.discoverer.query.AbstractQueryItem;
 import context.arch.discoverer.query.ORQueryItem;
@@ -14,12 +16,13 @@ import context.arch.storage.Attributes;
 public class GenericEnactor extends Enactor {
 
 	public GenericEnactor(AbstractQueryItem<?, ?> inWidgetSubscriptionQuery,
-			AbstractQueryItem<?, ?> outWidgetSubscriptionQuery, String outcomeName, String shortId, Query<?> query) {
+			AbstractQueryItem<?, ?> outWidgetSubscriptionQuery, String outcomeName,
+			String shortId, Query<?> query) {
 
+		
 		super(inWidgetSubscriptionQuery, outWidgetSubscriptionQuery, outcomeName, shortId);
-		// TODO Auto-generated constructor stub
-
-
+		
+		
 		NonConstantAttributeElement attributeElement = null;
 		AttributeComparison atComparison = null;
 

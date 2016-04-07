@@ -1,13 +1,13 @@
-package experimento;
+package br.ufrn.coren.Entities;
 
 import java.io.Serializable;
 
-public class GenericAtribute<T> {
+public class GenericAttribute<T> {
 
 	private String atribute_name;
 	private T atribute_type;
 	
-	public GenericAtribute(String atribute_name) {
+	public GenericAttribute(String atribute_name) {
 		//super();
 		this.atribute_name = atribute_name;
 	}

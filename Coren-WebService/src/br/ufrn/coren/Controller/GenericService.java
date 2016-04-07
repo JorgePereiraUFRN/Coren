@@ -1,4 +1,4 @@
-package experimento;
+package br.ufrn.coren.Controller;
 
 import context.arch.comm.DataObject;
 import context.arch.service.Service;

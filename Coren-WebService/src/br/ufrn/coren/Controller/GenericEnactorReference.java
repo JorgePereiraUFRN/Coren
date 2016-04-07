@@ -1,4 +1,4 @@
-package experimento;
+package br.ufrn.coren.Controller;
 
 import context.arch.discoverer.ComponentDescription;
 import context.arch.discoverer.query.AbstractQueryItem;

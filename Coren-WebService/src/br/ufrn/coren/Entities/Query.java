@@ -1,25 +1,25 @@
-package experimento;
+package br.ufrn.coren.Entities;
 
 import java.io.Serializable;
 
 public class Query<BaseValue> {
 
-	private GenericAtribute genericAtribute;
+	private GenericAttribute genericAtribute;
 	private QueryComparassion queryComparassion;
 	private BaseValue baseValue;
 
-	public Query(GenericAtribute a, QueryComparassion qc, BaseValue baseValue) {
+	public Query(GenericAttribute a, QueryComparassion qc, BaseValue baseValue) {
 		super();
 		this.genericAtribute = a;
 		this.queryComparassion = qc;
 		this.baseValue = baseValue;
 	}
 
-	public GenericAtribute getGenericAtribute() {
+	public GenericAttribute getGenericAtribute() {
 		return genericAtribute;
 	}
 
-	public void setGenericAtribute(GenericAtribute genericAtribute) {
+	public void setGenericAtribute(GenericAttribute genericAtribute) {
 		this.genericAtribute = genericAtribute;
 	}
 

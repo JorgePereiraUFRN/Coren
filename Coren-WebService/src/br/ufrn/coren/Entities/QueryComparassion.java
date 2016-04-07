@@ -1,4 +1,4 @@
-package experimento;
+package br.ufrn.coren.Entities;
 
 public enum QueryComparassion {
 	
