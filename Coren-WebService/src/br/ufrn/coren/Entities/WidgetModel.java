@@ -1,6 +1,5 @@
 package br.ufrn.coren.Entities;
 
-import java.util.List;
 
 import context.arch.storage.Attributes;
 
