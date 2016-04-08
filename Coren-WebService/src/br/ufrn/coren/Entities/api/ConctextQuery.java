@@ -1,5 +1,10 @@
 package br.ufrn.coren.Entities.api;
 
+import javax.persistence.Entity;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
+
 public class ConctextQuery {
 
 	private String entity;

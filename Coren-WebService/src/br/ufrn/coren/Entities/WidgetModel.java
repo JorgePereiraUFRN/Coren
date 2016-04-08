@@ -6,8 +6,8 @@ import context.arch.storage.Attributes;
 public class WidgetModel {
 	
 	private String name;
-	private Attributes nonConstAttributes;
-	private Attributes constAttributes;
+	private Attributes nonConstAttributes = new Attributes();
+	private Attributes constAttributes = new Attributes();
 	
 	
 	public String getName() {		

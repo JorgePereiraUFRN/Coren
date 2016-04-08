@@ -1,4 +1,4 @@
-package br.ufrn.coren.rest_api;
+package br.ufrn.coren.RestApi;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -6,8 +6,10 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import br.ufrn.coren.Controller.ContextFacade;
@@ -23,15 +25,16 @@ import br.ufrn.coren.Entities.api.ContextEntity;
 import br.ufrn.coren.Entities.api.NonConstAttribute;
 import context.arch.storage.Attribute;
 
-@Path("/context")
+@Path("context")
 public class ContextAPI {
 
 	private ContextFacade facade = new ContextFacade();
 	private static Map<String, WidgetModel> widgets = Collections.synchronizedMap(new HashMap<String, WidgetModel>());
 	private static AtomicInteger numEnactor = new AtomicInteger(0);
+	private static Map<String, ContextEntity> entities = Collections.synchronizedMap(new HashMap<String, ContextEntity>());
 
 	@POST
-	@Path("/create-entity")
+	@Path("create-entity")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String createWidget(ContextEntity entity) {
 
@@ -78,12 +81,12 @@ public class ContextAPI {
 
 		facade.createWidget(widgetModel);
 		widgets.put(entity.getName(), widgetModel);
-
+		entities.put(entity.getName(), entity);
 		return "sucess";
 	}
 
 	@POST
-	@Path("/create-query")
+	@Path("create-query")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String createQuery(ConctextQuery query) {
 
@@ -120,9 +123,18 @@ public class ContextAPI {
 
 		return "sucess";
 	}
+	
+	@GET
+	@Path("list-entities")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ContextEntity[] listEntities(){
+			
+		return entities.values().toArray(new ContextEntity[entities.values().size()]);
+		
+	}
 
 	private String validateEntity(ContextEntity entity) {
-
+		
 		if (entity.getName() == null || entity.getName().equals("")) {
 			return "The entity name was not be null";
 		}
@@ -140,6 +152,7 @@ public class ContextAPI {
 			}
 		}
 
+		
 		for (NonConstAttribute nConstAtt : entity.getNonConstAttributes()) {
 
 			if (nConstAtt.getAttName() == null || nConstAtt.getAttName().equals("")) {

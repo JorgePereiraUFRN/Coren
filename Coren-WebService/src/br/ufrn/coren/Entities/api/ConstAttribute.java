@@ -1,5 +1,8 @@
 package br.ufrn.coren.Entities.api;
 
+import javax.persistence.Entity;
+
+@Entity
 public class ConstAttribute extends NonConstAttribute {
 	
 	private String value;
