@@ -9,7 +9,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import context.arch.storage.Attribute;
-import context.arch.storage.AttributeNameValue;
 
 @Entity
 @Table(name="OUTCOME")
