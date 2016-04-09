@@ -14,8 +14,8 @@ public class HibernateDAOFactory extends DAOFactory {
     }
 
 	@Override
-	public ContextEntityDao getContextEntityDao() {
-		return  (ContextEntityDao) instantiateDAO(ContextEntityDao.class);
+	public WidgetModelDao getContextEntityDao() {
+		return  (WidgetModelDao) instantiateDAO(WidgetModelDao.class);
 	}
 
 

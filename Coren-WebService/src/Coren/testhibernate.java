@@ -3,51 +3,38 @@ package Coren;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ufrn.coren.DAO.ContextEntityDao;
-import br.ufrn.coren.DAO.ContextEntityDaoInterface;
-import br.ufrn.coren.Entities.api.AttributeType;
-import br.ufrn.coren.Entities.api.ConstAttribute;
-import br.ufrn.coren.Entities.api.ContextEntity;
-import br.ufrn.coren.Entities.api.NonConstAttribute;
+import br.ufrn.coren.DAO.WidgetModelDao;
+import br.ufrn.coren.DAO.WidgetModelDaoInterface;
 import br.ufrn.coren.Exceptions.DAOException;
+import br.ufrn.coren.Models.AttributeModel;
+import br.ufrn.coren.Models.WidgetModel;
 
 public class testhibernate {
 
-	private static ContextEntityDaoInterface entityDao = new ContextEntityDao();
-	private static ContextEntity entity1 = new ContextEntity();
+	private static WidgetModelDaoInterface entityDao = new WidgetModelDao();
+	private static WidgetModel entity1 = new WidgetModel();
 
 	public static void main(String[] args) throws DAOException {
 
-		saveEntity();
+		saveWidget();
 
 	}
 
-	private static void saveEntity() throws DAOException {
+	private static void saveWidget() throws DAOException {
 		entity1.setName("smart_home");
 
-		List<ConstAttribute> constatt = new ArrayList<>();
-
-		ConstAttribute constAtt1 = new ConstAttribute();
-		constAtt1.setAttName("room");
-		//constAtt1.setType(AttributeType.INTEGER);
-		constAtt1.setValue("room");
-
-		constatt.add(constAtt1);
-
-		entity1.setConstAttributes(constatt);
-
-		List<NonConstAttribute> nConstAtt = new ArrayList<>();
-		NonConstAttribute ncAtt1 = new NonConstAttribute();
-		ncAtt1.setAttName("temperature");
-		//ncAtt1.setType(AttributeType.INTEGER);
-
-		NonConstAttribute ncAtt2 = new NonConstAttribute();
-		ncAtt1.setAttName("has_people");
-		//ncAtt1.setType(AttributeType.BOOLEAN);
-
-		nConstAtt.add(ncAtt1);
-		nConstAtt.add(ncAtt2);
-
+		List<AttributeModel<?>> atts = new ArrayList<AttributeModel<?>>();
+		AttributeModel<Integer> temperatura = new AttributeModel<Integer>();
+		temperatura.setType("int");
+		temperatura.setName("temperatura");
+		atts.add(temperatura);
+		AttributeModel<Integer> presenca = new AttributeModel<Integer>();
+		presenca.setType("int");
+		presenca.setName("presenca");
+		atts.add(presenca);
+		
+		entity1.setAttributes(atts);
+		
 		entity1 = entityDao.save(entity1);
 	}
 }

@@ -1,4 +1,4 @@
-package br.ufrn.coren.models;
+package br.ufrn.coren.Models;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

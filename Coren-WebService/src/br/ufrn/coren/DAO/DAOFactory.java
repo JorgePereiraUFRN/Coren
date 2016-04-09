@@ -25,6 +25,6 @@ public abstract class DAOFactory {
  
     // Add your DAO interfaces here
     
-    public abstract ContextEntityDao getContextEntityDao();
+    public abstract WidgetModelDao getContextEntityDao();
     
 }

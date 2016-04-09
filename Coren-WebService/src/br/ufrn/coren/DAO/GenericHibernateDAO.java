@@ -81,6 +81,23 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable>
 		return found;
 
 	}
+	
+	@Override
+	public T findByName(Class<T> classe, String name) throws DAOException {
+
+		T found = null;
+
+		try {
+			found = getInstance().find(classe, name);
+		} catch (NoResultException e) {
+			return found;
+		} catch (Exception e) {
+			throw new DAOException(e.getMessage());
+		}
+
+		return found;
+
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override

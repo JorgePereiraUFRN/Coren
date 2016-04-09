@@ -9,6 +9,8 @@ import br.ufrn.coren.Exceptions.DAOException;
 public interface GenericDaoInterface<T, ID extends Serializable> {
 	
 	public T findById(Class<T> classe, ID id) throws DAOException;
+	
+	public T findByName(Class<T> classe, String name) throws DAOException;
 	 
 	public List<T> findAll(Class<T> classe)throws DAOException;
  

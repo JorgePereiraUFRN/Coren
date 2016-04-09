@@ -1,19 +1,19 @@
-package tests;
+package Coren;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ufrn.coren.models.AttributeModel;
-import br.ufrn.coren.models.EnactorModel;
-import br.ufrn.coren.models.OutcomeModel;
-import br.ufrn.coren.models.QueryModel;
-import br.ufrn.coren.models.ReferenceModel;
-import br.ufrn.coren.models.WidgetModel;
+import br.ufrn.coren.Models.AttributeModel;
+import br.ufrn.coren.Models.EnactorModel;
+import br.ufrn.coren.Models.OutcomeModel;
+import br.ufrn.coren.Models.QueryModel;
+import br.ufrn.coren.Models.ReferenceModel;
+import br.ufrn.coren.Models.WidgetModel;
 import context.arch.discoverer.Discoverer;
 import context.arch.enactor.Enactor;
 import context.arch.widget.Widget;
 
-public class RoomApp {
+public class testRoomApp {
 
 	public static void main(String[] args) {
 		Discoverer.start();

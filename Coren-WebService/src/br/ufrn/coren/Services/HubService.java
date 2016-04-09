@@ -1,4 +1,4 @@
-package br.ufrn.coren.services;
+package br.ufrn.coren.Services;
 
 
 import context.arch.comm.DataObject;

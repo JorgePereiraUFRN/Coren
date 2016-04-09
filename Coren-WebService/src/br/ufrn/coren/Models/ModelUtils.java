@@ -1,4 +1,4 @@
-package br.ufrn.coren.models;
+package br.ufrn.coren.Models;
 
 public class ModelUtils {
 	

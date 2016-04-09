@@ -1,11 +1,23 @@
-package br.ufrn.coren.models;
+package br.ufrn.coren.Models;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.ufrn.coren.services.HubService;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import br.ufrn.coren.Services.HubService;
 import context.arch.discoverer.ComponentDescription;
 import context.arch.discoverer.query.AbstractQueryItem;
 import context.arch.enactor.AttributeEvalParser;
@@ -17,40 +29,72 @@ import context.arch.storage.Attributes;
 import context.arch.widget.Widget;
 import context.arch.widget.WidgetXmlParser;
 
+@XmlRootElement
+@Entity
+@Table(name="ENACTOR")
+@SequenceGenerator(name="ENACTOR_SEQUENCE", sequenceName="ENACTOR_SEQUENCE", allocationSize=1, initialValue=0)
 public class EnactorModel {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ENACTOR_SEQUENCE")
+    private long id;
+	
+	@Column
 	private String name;
+	
+	@OneToOne
+	@JoinColumn(name="WIDGET_ID")
 	private WidgetModel inputWidget;
-	@SuppressWarnings("rawtypes")
-	private OutcomeModel outcome;
+
+	@OneToOne
+	@JoinColumn(name="OUTCOME_ID")
+	private OutcomeModel<?> outcome;
+	
+	@OneToMany
+	@JoinColumn(name="ENACTOR_ID")
 	private List<ReferenceModel> references;
+	
+	public long getId() {
+		return this.id;
+	}
+	
+	public void setId(long id) {
+		this.id = id;
+	}
 	
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	public WidgetModel getInputWidget() {
 		return inputWidget;
 	}
+	
 	public void setInputWidget(WidgetModel inputWidget) {
 		this.inputWidget = inputWidget;
 	}
+	
 	public List<ReferenceModel> getReferences() {
 		return references;
 	}
+	
 	public void setReference(List<ReferenceModel> references) {
 		this.references = references;
 	}
+	
 	public OutcomeModel<?> getOutcome() {
 		return outcome;
 	}
+	
 	public void setOutcome(OutcomeModel<?> outcome) {
 		this.outcome = outcome;
 	}
 	
-	@SuppressWarnings({ "unchecked", "serial" })
+	@SuppressWarnings({ "serial" })
 	public Enactor createEnactor() {
 		
 		ComponentDescription inWidgetStub = inputWidget.createWidgetStub();

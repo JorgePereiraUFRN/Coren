@@ -5,7 +5,7 @@ import javax.ws.rs.core.MediaType;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 
-import br.ufrn.coren.Entities.api.Topic;
+import br.ufrn.coren.Models.Topic;
 
 public class Publish {
 

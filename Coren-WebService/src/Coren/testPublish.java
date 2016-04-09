@@ -1,7 +1,7 @@
 package Coren;
 
 import br.ufrn.coren.Controller.Publish;
-import br.ufrn.coren.Entities.api.Topic;
+import br.ufrn.coren.Models.Topic;
 
 public class testPublish {
 

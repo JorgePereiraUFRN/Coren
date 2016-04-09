@@ -1,4 +1,4 @@
-package br.ufrn.coren.Entities.api;
+package br.ufrn.coren.Models;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
