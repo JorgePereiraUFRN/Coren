@@ -8,50 +8,32 @@ import javax.ws.rs.core.MediaType;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 
-import br.ufrn.coren.Entities.api.AttributeType;
-import br.ufrn.coren.Entities.api.ConstAttribute;
-import br.ufrn.coren.Entities.api.ContextEntity;
-import br.ufrn.coren.Entities.api.NonConstAttribute;
+import br.ufrn.coren.Models.AttributeModel;
+import br.ufrn.coren.Models.WidgetModel;
 
 public class InformationProvider {
-
 	
-
-	public static void createEntity() {
+	public static void createWidget() {
 
 		Client client = Client.create();
 		
-		WebResource resource = client.resource("http://localhost:8080/Coren-WebService/context/create-entity");
+		WebResource resource = client.resource("http://localhost:8080/Coren-WebService/context/create-widget");
 
-		ContextEntity entity1 = new ContextEntity();
-
-		entity1.setName("smart_home");
-
-		List<ConstAttribute> constatt = new ArrayList<>();
-
-		ConstAttribute constAtt1 = new ConstAttribute();
-		constAtt1.setAttName("room");
-		constAtt1.setType(AttributeType.INTEGER);
-		constAtt1.setValue("room");
-
-		constatt.add(constAtt1);
-
-		entity1.setConstAttributes(constatt);
-
-		List<NonConstAttribute> nConstAtt = new ArrayList<>();
-		NonConstAttribute ncAtt1 = new NonConstAttribute();
-		ncAtt1.setAttName("temperature");
-		ncAtt1.setType(AttributeType.INTEGER);
-
-		NonConstAttribute ncAtt2 = new NonConstAttribute();
-		ncAtt2.setAttName("has_people");
-		ncAtt2.setType(AttributeType.BOOLEAN);
-
-		nConstAtt.add(ncAtt1);
-		nConstAtt.add(ncAtt2);
-		entity1.setNonConstAttributes(nConstAtt);
+		List<AttributeModel<?>> atts = new ArrayList<AttributeModel<?>>();
+		AttributeModel<Integer> temperatura = new AttributeModel<Integer>();
+		temperatura.setType("int");
+		temperatura.setName("temperatura");
+		atts.add(temperatura);
+		AttributeModel<Integer> presenca = new AttributeModel<Integer>();
+		presenca.setType("int");
+		presenca.setName("presenca");
+		atts.add(presenca);
+		WidgetModel widget = new WidgetModel();
+		widget.setName("RoomWidget");
+		widget.setAttributes(atts);
 		
-		String message = resource.type(MediaType.APPLICATION_JSON).post(String.class, entity1);
+		
+		String message = resource.type(MediaType.APPLICATION_JSON).post(String.class, widget);
 		
 		System.out.println(message);
 
@@ -59,7 +41,7 @@ public class InformationProvider {
 	
 	public static void main(String args[]){
 		
-		createEntity();
+		createWidget();
 	}
 
 }
