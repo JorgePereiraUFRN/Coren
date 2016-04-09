@@ -25,6 +25,7 @@ import context.arch.enactor.Enactor;
 import context.arch.enactor.EnactorReference;
 import context.arch.service.Service;
 import context.arch.service.helper.ServiceInput;
+import context.arch.storage.Attribute;
 import context.arch.storage.Attributes;
 import context.arch.widget.Widget;
 import context.arch.widget.WidgetXmlParser;
@@ -48,7 +49,7 @@ public class EnactorModel {
 
 	@OneToOne
 	@JoinColumn(name="OUTCOME_ID")
-	private OutcomeModel<?> outcome;
+	private OutcomeModel outcome;
 	
 	@OneToMany
 	@JoinColumn(name="ENACTOR_ID")
@@ -86,16 +87,16 @@ public class EnactorModel {
 		this.references = references;
 	}
 	
-	public OutcomeModel<?> getOutcome() {
+	public OutcomeModel getOutcome() {
 		return outcome;
 	}
 	
-	public void setOutcome(OutcomeModel<?> outcome) {
+	public void setOutcome(OutcomeModel outcome) {
 		this.outcome = outcome;
 	}
 	
-	@SuppressWarnings({ "serial" })
-	public Enactor createEnactor() {
+	@SuppressWarnings({ "serial", "unchecked" })
+	public <T extends Comparable<? super T>> Enactor createEnactor() {
 		
 		ComponentDescription inWidgetStub = inputWidget.createWidgetStub();
 		AbstractQueryItem<?, ?> inWidgetQuery = WidgetXmlParser.createWidgetSubscriptionQuery(inWidgetStub);
@@ -125,7 +126,7 @@ public class EnactorModel {
 			queries.put(reference.getQuery().getNome(), query);
 
 			List<AttributeEvalParser<?>> assnParsers = new ArrayList<AttributeEvalParser<?>>();
-			assnParsers.add(AttributeEvalParser.instance(reference.getOutcome().toAttribute(), reference.getOutcome().getValue().trim(), constVars));
+			assnParsers.add(AttributeEvalParser.instance((Attribute<T>) reference.getOutcome().toAttribute(), reference.getOutcome().getValue().trim(), constVars));
 
 			List<ServiceInput> serviceInputs = new ArrayList<ServiceInput>();
 			serviceInputs.add(new ServiceInput("HubService", "publish", 

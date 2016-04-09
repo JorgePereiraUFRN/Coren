@@ -36,5 +36,15 @@ public class ModelUtils {
 			}		
 		}
 	}
+	
+	public static Comparable<?> toValue(Class<?> type, String value) {
+		Comparable<?> result = null;
+		try {
+			result = (Comparable<?>) type.getMethod("valueOf", String.class).invoke(null, value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 
 }

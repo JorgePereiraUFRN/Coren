@@ -28,7 +28,7 @@ public class ReferenceModel {
 	
 	@OneToOne
 	@JoinColumn(name="OUTCOME_ID", nullable = false)
-	private OutcomeModel<?> outcome;
+	private OutcomeModel outcome;
 	
 	@Column(name="ENACTOR_ID")
 	private long enactorId;
@@ -53,10 +53,10 @@ public class ReferenceModel {
 	public void setQuery(QueryModel query) {
 		this.query = query;
 	}
-	public OutcomeModel<?> getOutcome() {
+	public OutcomeModel getOutcome() {
 		return outcome;
 	}
-	public void setOutcome(OutcomeModel<?> outcome) {
+	public void setOutcome(OutcomeModel outcome) {
 		this.outcome = outcome;
 	}
 

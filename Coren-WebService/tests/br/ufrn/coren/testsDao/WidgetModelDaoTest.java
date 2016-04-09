@@ -25,12 +25,12 @@ public class WidgetModelDaoTest {
 		
 		widget1.setName("smart_home");
 		
-		List<AttributeModel<?>> atts = new ArrayList<AttributeModel<?>>();
-		AttributeModel<Integer> temperatura = new AttributeModel<Integer>();
+		List<AttributeModel> atts = new ArrayList<AttributeModel>();
+		AttributeModel temperatura = new AttributeModel();
 		temperatura.setType("int");
 		temperatura.setName("temperatura");
 		atts.add(temperatura);
-		AttributeModel<Integer> presenca = new AttributeModel<Integer>();
+		AttributeModel presenca = new AttributeModel();
 		presenca.setType("int");
 		presenca.setName("presenca");
 		atts.add(presenca);

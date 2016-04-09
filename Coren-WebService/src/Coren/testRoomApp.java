@@ -18,12 +18,12 @@ public class testRoomApp {
 	public static void main(String[] args) {
 		Discoverer.start();
 		
-		List<AttributeModel<?>> atts = new ArrayList<AttributeModel<?>>();
-		AttributeModel<Integer> temperatura = new AttributeModel<Integer>();
+		List<AttributeModel> atts = new ArrayList<AttributeModel>();
+		AttributeModel temperatura = new AttributeModel();
 		temperatura.setType("int");
 		temperatura.setName("temperatura");
 		atts.add(temperatura);
-		AttributeModel<Integer> presenca = new AttributeModel<Integer>();
+		AttributeModel presenca = new AttributeModel();
 		presenca.setType("int");
 		presenca.setName("presenca");
 		atts.add(presenca);
@@ -36,7 +36,7 @@ public class testRoomApp {
 		EnactorModel enactor = new EnactorModel();
 		enactor.setName("RoomEnactor");
 		enactor.setInputWidget(widget);
-		OutcomeModel<String> outcome = new OutcomeModel<String>();
+		OutcomeModel outcome = new OutcomeModel();
 		outcome.setName("lampada");
 		outcome.setType("string");
 		outcome.setDescription("lampada da sala");
@@ -44,7 +44,7 @@ public class testRoomApp {
 		List<ReferenceModel> references = new ArrayList<ReferenceModel>();
 		ReferenceModel off = new ReferenceModel();
 		off.setName("Off");
-		OutcomeModel<String> outcomeOff = new OutcomeModel<String>();
+		OutcomeModel outcomeOff = new OutcomeModel();
 		outcomeOff.setName("lampada");
 		outcomeOff.setType("string");
 		outcomeOff.setDescription("lampada da sala");
@@ -57,7 +57,7 @@ public class testRoomApp {
 		references.add(off);
 		ReferenceModel on = new ReferenceModel();
 		on.setName("On");
-		OutcomeModel<String> outcomeOn = new OutcomeModel<String>();
+		OutcomeModel outcomeOn = new OutcomeModel();
 		outcomeOn.setName("lampada");
 		outcomeOn.setType("string");
 		outcomeOn.setDescription("lampada da sala");

@@ -9,11 +9,12 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import context.arch.storage.Attribute;
+import context.arch.storage.AttributeNameValue;
 
 @Entity
 @Table(name="OUTCOME")
 @SequenceGenerator(name="OUTCOME_SEQUENCE", sequenceName="OUTCOME_SEQUENCE", allocationSize=1, initialValue=0)
-public class OutcomeModel<T extends Comparable<T>> {
+public class OutcomeModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OUTCOME_SEQUENCE")
@@ -65,9 +66,11 @@ public class OutcomeModel<T extends Comparable<T>> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public Attribute<T> toAttribute() {
-		Class<T> attType = (Class<T>) ModelUtils.toClass(type);
-		Attribute<T> att = Attribute.instance(name, attType);
+	public <T extends Comparable<? super T>> Attribute<T> toAttribute() {
+		
+		Class<T> attType = (Class<T>) ModelUtils.toClass(this.type);
+		Attribute<T> att = Attribute.instance(this.name, attType);
+		
 		return att;
 	}
 	

@@ -33,7 +33,7 @@ public class WidgetModel {
 	
 	@OneToMany
 	@JoinColumn(name="WIDGET_ID", nullable = false)
-	private List<AttributeModel<?>> attributes;
+	private List<AttributeModel> attributes;
 	
 	public long getId() {
 		return this.id;
@@ -51,11 +51,11 @@ public class WidgetModel {
 		this.name = name;
 	}
 	
-	public List<AttributeModel<?>> getAttributes() {
+	public List<AttributeModel> getAttributes() {
 		return attributes;
 	}
 	
-	public void setAttributes(List<AttributeModel<?>> attributes) {
+	public void setAttributes(List<AttributeModel> attributes) {
 		this.attributes = attributes;
 	}
 	
@@ -66,7 +66,7 @@ public class WidgetModel {
 			
 			@Override
 			protected void init() {
-				for (AttributeModel<?> att : attributes) {
+				for (AttributeModel att : attributes) {
 					addAttribute(att.toAttribute(), att.isConstant());
 				}
 			}
@@ -89,7 +89,7 @@ public class WidgetModel {
 			@Override
 			protected void init() {
 				// TODO: aqui os atributos constantes deveriam ficar sem os valores varificar se com os valores irar gerar algum problema
-				for (AttributeModel<?> att : attributes) {
+				for (AttributeModel att : attributes) {
 					addAttribute(att.toAttribute(), att.isConstant());
 				}
 			}
@@ -104,7 +104,7 @@ public class WidgetModel {
 		return WidgetXmlParser.createWidgetStub(widget);
 	}
 	
-	public static Widget createWidget(OutcomeModel<?> outcome) {
+	public static Widget createWidget(OutcomeModel outcome) {
 		Widget widget = new Widget(
 				outcome.getName(), 
 				outcome.getName()) {

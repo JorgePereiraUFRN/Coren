@@ -14,7 +14,7 @@ import context.arch.storage.AttributeNameValue;
 @Entity
 @Table(name="ATTRIBUTE")
 @SequenceGenerator(name="ATTRIBUTE_SEQUENCE", sequenceName="ATTRIBUTE_SEQUENCE", allocationSize=1, initialValue=0)
-public class AttributeModel<T extends Comparable<T>> {
+public class AttributeModel {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ATTRIBUTE_SEQUENCE")
@@ -27,7 +27,7 @@ public class AttributeModel<T extends Comparable<T>> {
 	private String type;
 	
 	@Column
-	private T value;
+	private String value;
 	
 	@Column
 	private boolean constant;
@@ -59,11 +59,11 @@ public class AttributeModel<T extends Comparable<T>> {
 		this.type = type;
 	}
 	
-	public T getValue() {
+	public String getValue() {
 		return value;
 	}
 	
-	public void setValue(T value) {
+	public void setValue(String value) {
 		this.value = value;
 	}
 	
@@ -83,19 +83,18 @@ public class AttributeModel<T extends Comparable<T>> {
 		this.widgetId = widgetId;
 	}
 
+	
 	@SuppressWarnings("unchecked")
-	public Attribute<T> toAttribute() {
+	public <T extends Comparable<? super T>> Attribute<T> toAttribute() {
 		Attribute<T> att;		
 		
-		if (constant) {
-			att = AttributeNameValue.instance(
-					name,
-					value
-					);
+		Class<T> attType = (Class<T>) ModelUtils.toClass(this.type);
+		if (this.constant) {
+			T value = (T) ModelUtils.toValue(attType, this.value);
+			att = AttributeNameValue.instance(this.name, value);
 		}
 		else {
-			Class<T> attType = (Class<T>) ModelUtils.toClass(type);
-			att = Attribute.instance(name, attType);
+			att = Attribute.instance(this.name, attType);
 		}
 		
 		return att;
