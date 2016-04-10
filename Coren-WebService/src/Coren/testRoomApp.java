@@ -11,7 +11,6 @@ import br.ufrn.coren.Models.ReferenceModel;
 import br.ufrn.coren.Models.WidgetModel;
 import br.ufrn.coren.RestApi.CorenAPI;
 import context.arch.discoverer.Discoverer;
-import context.arch.widget.Widget;
 
 public class testRoomApp {
 
@@ -19,26 +18,34 @@ public class testRoomApp {
 		CorenAPI api = new CorenAPI();
 		Discoverer.start();
 		
-		List<AttributeModel> atts = new ArrayList<AttributeModel>();
-		AttributeModel temperatura = new AttributeModel();
-		temperatura.setType("int");
-		temperatura.setName("temperatura");
-		atts.add(temperatura);
-		AttributeModel presenca = new AttributeModel();
-		presenca.setType("int");
-		presenca.setName("presenca");
-		atts.add(presenca);
-		WidgetModel widget = new WidgetModel();
-		widget.setName("RoomWidget");
-		widget.setAttributes(atts);
+		List<AttributeModel> atts1 = new ArrayList<AttributeModel>();
+		AttributeModel presence = new AttributeModel();
+		presence.setType("int");
+		presence.setName("presence");
+		atts1.add(presence);
+		WidgetModel widget1 = new WidgetModel();
+		widget1.setName("PresenceWidget");
+		widget1.setAttributes(atts1);
+		api.createWidget(widget1);
 		
-		api.createWidget(widget);
+		List<AttributeModel> atts2 = new ArrayList<AttributeModel>();
+		AttributeModel brightness = new AttributeModel();
+		brightness.setType("int");
+		brightness.setName("brightness");
+		atts2.add(brightness);
+		WidgetModel widget2 = new WidgetModel();
+		widget2.setName("BrightnessWidget");
+		widget2.setAttributes(atts2);
+		api.createWidget(widget2);
 		
 		EnactorModel enactor = new EnactorModel();
 		enactor.setName("RoomEnactor");
-		enactor.setWidget("RoomWidget");
+		List<String> widgets = new ArrayList<String>();
+		widgets.add("PresenceWidget");
+		widgets.add("BrightnessWidget");
+		enactor.setWidgets(widgets);
 		OutcomeModel outcome = new OutcomeModel();
-		outcome.setName("lampada");
+		outcome.setName("light");
 		outcome.setType("string");
 		outcome.setDescription("lampada da sala");
 		enactor.setOutcome(outcome);
@@ -46,20 +53,20 @@ public class testRoomApp {
 		ReferenceModel off = new ReferenceModel();
 		off.setName("Off");
 		OutcomeModel outcomeOff = new OutcomeModel();
-		outcomeOff.setName("lampada");
+		outcomeOff.setName("light");
 		outcomeOff.setType("string");
 		outcomeOff.setDescription("lampada da sala");
 		outcomeOff.setValue("0");
 		off.setOutcome(outcomeOff);
 		QueryModel lightOff = new QueryModel();
 		lightOff.setNome("lightOff");
-		lightOff.setValue("(OR (EQUAL presenca 0) (GREATER temperatura 25) )");
+		lightOff.setValue("(OR (EQUAL presence 0) (GREATER brightness 25) )");
 		off.setQuery(lightOff);
 		references.add(off);
 		ReferenceModel on = new ReferenceModel();
 		on.setName("On");
 		OutcomeModel outcomeOn = new OutcomeModel();
-		outcomeOn.setName("lampada");
+		outcomeOn.setName("light");
 		outcomeOn.setType("string");
 		outcomeOn.setDescription("lampada da sala");
 		outcomeOn.setValue("1");
@@ -72,6 +79,23 @@ public class testRoomApp {
 		enactor.setReferences(references);
 		
 		api.createEnactor(enactor); 
+		
+		try {
+			Thread.sleep(2000);
+			api.updateWidget("PresenceWidget", "presence", 0);
+			Thread.sleep(2000);
+			api.updateWidget("BrightnessWidget", "brightness", 0);
+			Thread.sleep(2000);
+			api.updateWidget("PresenceWidget", "presence", 1);
+			Thread.sleep(2000);
+			api.updateWidget("BrightnessWidget", "brightness", 20);
+			Thread.sleep(2000);
+			api.updateWidget("BrightnessWidget", "brightness", 30);
+		} catch (Exception e) {
+			
+		}
+		
+		
 
 	}
 

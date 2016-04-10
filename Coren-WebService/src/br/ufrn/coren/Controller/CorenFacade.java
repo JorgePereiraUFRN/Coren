@@ -5,18 +5,20 @@ import br.ufrn.coren.Models.EnactorModel;
 import br.ufrn.coren.Models.WidgetModel;
 import br.ufrn.coren.Services.EnactorService;
 import br.ufrn.coren.Services.WidgetService;
+import context.arch.enactor.Enactor;
+import context.arch.widget.Widget;
 
 public class CorenFacade {
 	
 	
-	public void createWidget(WidgetModel widget){
+	public Widget createWidget(WidgetModel widget){
 		WidgetService service = new WidgetService();
-		service.createWidget(widget);
+		return service.createWidget(widget);
 	}
 	
-	public void createEnactor(EnactorModel enactor) throws WidgetNotFoundException{
+	public Enactor createEnactor(EnactorModel enactor) throws WidgetNotFoundException{
 		EnactorService service = new EnactorService();
-		service.createEnactor(enactor);
+		return service.createEnactor(enactor);
 	}
 	
 	

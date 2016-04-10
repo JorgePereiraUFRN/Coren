@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import context.arch.discoverer.ComponentDescription;
+import context.arch.discoverer.ComponentDescriptions;
 import context.arch.discoverer.component.NonConstantAttributeElement;
 import context.arch.discoverer.component.NonConstantAttributeNameElement;
 import context.arch.discoverer.query.ANDQueryItem;
@@ -24,11 +24,11 @@ public class QueryModelParser {
 
 	private Map<String, Comparable<?>> constVars;
 	private Map<String, AbstractQueryItem<?, ?>> queries;
-	private ComponentDescription widgetStub;
+	private ComponentDescriptions widgetStub;
 	
 	private String fullText;
 	
-	public QueryModelParser(String fullText, Map<String, Comparable<?>> constVars, Map<String, AbstractQueryItem<?, ?>> queries, ComponentDescription widgetStub) {
+	public QueryModelParser(String fullText, Map<String, Comparable<?>> constVars, Map<String, AbstractQueryItem<?, ?>> queries, ComponentDescriptions widgetStub) {
 		this.fullText = fullText;
 		this.constVars = constVars;
 		this.queries = queries;
@@ -208,7 +208,7 @@ public class QueryModelParser {
 		AttributeComparison comparison = null;
 
 		// assume non-constant attribute
-		Attribute<?> att = widgetStub.getNonConstantAttribute(attName);
+		Attribute<?> att = widgetStub.mergeComponentDescriptions().getNonConstantAttribute(attName);
 		if (att == null) {
 			throw new RuntimeException("Attribute " + attName + " not found among non-constant attributes");
 		}
@@ -271,5 +271,5 @@ public class QueryModelParser {
 			return query;
 		}
 	}
-
+	
 }

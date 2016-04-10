@@ -21,6 +21,7 @@ import br.ufrn.coren.Exceptions.WidgetNotFoundException;
 import br.ufrn.coren.RestApi.CorenAPI;
 import br.ufrn.coren.Services.HubService;
 import context.arch.discoverer.ComponentDescription;
+import context.arch.discoverer.ComponentDescriptions;
 import context.arch.discoverer.query.AbstractQueryItem;
 import context.arch.enactor.AttributeEvalParser;
 import context.arch.enactor.Enactor;
@@ -46,7 +47,7 @@ public class EnactorModel {
 	private String name;
 	
 	@Column
-	private String widget;
+	private List<String> widgets;
 
 	@OneToOne
 	@JoinColumn(name="OUTCOME_ID")
@@ -72,12 +73,12 @@ public class EnactorModel {
 		this.name = name;
 	}
 	
-	public String getWidget() {
-		return widget;
+	public List<String> getWidgets() {
+		return widgets;
 	}
 	
-	public void setWidget(String widget) {
-		this.widget = widget;
+	public void setWidgets(List<String> widgets) {
+		this.widgets = widgets;
 	}
 	
 	public List<ReferenceModel> getReferences() {
@@ -99,9 +100,16 @@ public class EnactorModel {
 	@SuppressWarnings({ "serial", "unchecked" })
 	public <T extends Comparable<? super T>> Enactor createEnactor() throws WidgetNotFoundException {
 		
-		WidgetModel inputWidget = CorenAPI.getWidget(widget);
-		ComponentDescription inWidgetStub = inputWidget.createWidgetStub();
-		AbstractQueryItem<?, ?> inWidgetQuery = WidgetXmlParser.createWidgetSubscriptionQuery(inWidgetStub);
+		final ComponentDescriptions inWidgetStubs = new ComponentDescriptions();
+		List<AbstractQueryItem<?,?>> inWidgetQueries = new ArrayList<AbstractQueryItem<?,?>>();
+		
+		for (String widget: widgets) {
+			Widget inputWidget = CorenAPI.getWidget(widget);
+			ComponentDescription inWidgetStub = WidgetXmlParser.createWidgetStub(inputWidget);
+			inWidgetStubs.add(inWidgetStub);
+			AbstractQueryItem<?, ?> inWidgetQuery = WidgetXmlParser.createWidgetSubscriptionQuery(inWidgetStub);
+			inWidgetQueries.add(inWidgetQuery);
+		}
 		
 		Widget outputWidget = WidgetModel.createWidget(outcome);
 		Service hubService = new HubService(outputWidget, outcome.getName());
@@ -109,7 +117,7 @@ public class EnactorModel {
 		ComponentDescription outWidgetStub = WidgetXmlParser.createWidgetStub(outputWidget);
 		AbstractQueryItem<?, ?> outWidgetQuery = WidgetXmlParser.createWidgetSubscriptionQuery(outWidgetStub);
 		
-		GenericEnactor enactor = new GenericEnactor(inWidgetQuery, outWidgetQuery, outcome.getName(), name) {
+		GenericEnactor enactor = new GenericEnactor(inWidgetQueries.toArray(new AbstractQueryItem<?,?>[0]), new AbstractQueryItem<?,?>[] {outWidgetQuery}, outcome.getName(), name) {
 
 			@Override				
 			public String getClassname() {
@@ -122,7 +130,7 @@ public class EnactorModel {
 		Map<String, Comparable<?>> constVars = new HashMap<String, Comparable<?>>(); // pode ser adicionados constantes do enactor
 			
 		for (ReferenceModel reference : references) {
-			QueryModelParser parser = new QueryModelParser(reference.getQuery().getValue().trim(), constVars, queries, inWidgetStub);
+			QueryModelParser parser = new QueryModelParser(reference.getQuery().getValue().trim(), constVars, queries, inWidgetStubs);
 			AbstractQueryItem<?, ?> query = parser.parseQuery();
 			queries.put(reference.getQuery().getNome(), query);
 
@@ -145,8 +153,8 @@ public class EnactorModel {
 	
 	private class GenericEnactor extends Enactor {
 
-		public GenericEnactor(AbstractQueryItem<?, ?> inWidgetSubscriptionQuery,
-				AbstractQueryItem<?, ?> outWidgetSubscriptionQuery, String outcomeName, String shortId) {
+		public GenericEnactor(AbstractQueryItem<?, ?>[] inWidgetSubscriptionQuery,
+				AbstractQueryItem<?, ?>[] outWidgetSubscriptionQuery, String outcomeName, String shortId) {
 			super(inWidgetSubscriptionQuery, outWidgetSubscriptionQuery, outcomeName, shortId);
 		}
 		

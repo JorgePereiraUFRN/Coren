@@ -44,9 +44,12 @@ public class QueryCreator {
 		
 		EnactorModel enactor = new EnactorModel();
 		enactor.setName("RoomEnactor");
-		enactor.setWidget("RoomWidget");
+		List<String> widgets = new ArrayList<String>();
+		widgets.add("PresenceWidget");
+		widgets.add("BrightnessWidget");
+		enactor.setWidgets(widgets);
 		OutcomeModel outcome = new OutcomeModel();
-		outcome.setName("lampada");
+		outcome.setName("light");
 		outcome.setType("string");
 		outcome.setDescription("lampada da sala");
 		enactor.setOutcome(outcome);
@@ -54,20 +57,20 @@ public class QueryCreator {
 		ReferenceModel off = new ReferenceModel();
 		off.setName("Off");
 		OutcomeModel outcomeOff = new OutcomeModel();
-		outcomeOff.setName("lampada");
+		outcomeOff.setName("light");
 		outcomeOff.setType("string");
 		outcomeOff.setDescription("lampada da sala");
 		outcomeOff.setValue("0");
 		off.setOutcome(outcomeOff);
 		QueryModel lightOff = new QueryModel();
 		lightOff.setNome("lightOff");
-		lightOff.setValue("(OR (EQUAL presenca 0) (GREATER temperatura 25) )");
+		lightOff.setValue("(OR (EQUAL presence 0) (GREATER brightness 25) )");
 		off.setQuery(lightOff);
 		references.add(off);
 		ReferenceModel on = new ReferenceModel();
 		on.setName("On");
 		OutcomeModel outcomeOn = new OutcomeModel();
-		outcomeOn.setName("lampada");
+		outcomeOn.setName("light");
 		outcomeOn.setType("string");
 		outcomeOn.setDescription("lampada da sala");
 		outcomeOn.setValue("1");

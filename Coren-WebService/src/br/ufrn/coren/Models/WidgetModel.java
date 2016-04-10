@@ -14,9 +14,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import context.arch.discoverer.ComponentDescription;
 import context.arch.widget.Widget;
-import context.arch.widget.WidgetXmlParser;
 
 @XmlRootElement
 @Entity
@@ -79,29 +77,6 @@ public class WidgetModel {
 		};
 		widget.start(true); // register widget in discoverer
 		return widget;
-	}
-	
-	public ComponentDescription createWidgetStub() {
-		Widget widget = new Widget(
-				name, 
-				name) {
-			
-			@Override
-			protected void init() {
-				// TODO: aqui os atributos constantes deveriam ficar sem os valores varificar se com os valores irar gerar algum problema
-				for (AttributeModel att : attributes) {
-					addAttribute(att.toAttribute(), att.isConstant());
-				}
-			}
-
-			
-			@Override
-			public String getClassname() {
-				return name;
-			}
-		};
-		widget.start(false); // not register in discoverer
-		return WidgetXmlParser.createWidgetStub(widget);
 	}
 	
 	public static Widget createWidget(OutcomeModel outcome) {
