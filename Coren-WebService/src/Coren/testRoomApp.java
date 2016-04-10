@@ -9,13 +9,14 @@ import br.ufrn.coren.Models.OutcomeModel;
 import br.ufrn.coren.Models.QueryModel;
 import br.ufrn.coren.Models.ReferenceModel;
 import br.ufrn.coren.Models.WidgetModel;
+import br.ufrn.coren.RestApi.CorenAPI;
 import context.arch.discoverer.Discoverer;
-import context.arch.enactor.Enactor;
 import context.arch.widget.Widget;
 
 public class testRoomApp {
 
 	public static void main(String[] args) {
+		CorenAPI api = new CorenAPI();
 		Discoverer.start();
 		
 		List<AttributeModel> atts = new ArrayList<AttributeModel>();
@@ -31,11 +32,11 @@ public class testRoomApp {
 		widget.setName("RoomWidget");
 		widget.setAttributes(atts);
 		
-		Widget roomWidget = widget.createWidget();
+		api.createWidget(widget);
 		
 		EnactorModel enactor = new EnactorModel();
 		enactor.setName("RoomEnactor");
-		enactor.setInputWidget(widget);
+		enactor.setWidget("RoomWidget");
 		OutcomeModel outcome = new OutcomeModel();
 		outcome.setName("lampada");
 		outcome.setType("string");
@@ -68,29 +69,9 @@ public class testRoomApp {
 		lightOn.setValue("(ELSE (QUERY lightOff) )");
 		on.setQuery(lightOn);
 		references.add(on);
-		enactor.setReference(references);
+		enactor.setReferences(references);
 		
-		Enactor appTemperatura = enactor.createEnactor(); 
-		
-		try {
-			roomWidget.updateData("temperatura", 0);
-			roomWidget.updateData("presenca", 0);
-			Thread.sleep(2000);
-			roomWidget.updateData("presenca", 1);
-			Thread.sleep(2000);
-			roomWidget.updateData("temperatura", 30);
-			Thread.sleep(2000);
-			roomWidget.updateData("temperatura", 20);
-			Thread.sleep(2000);
-			roomWidget.updateData("temperatura", 30);
-			Thread.sleep(2000);
-			roomWidget.updateData("presenca", 0);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
+		api.createEnactor(enactor); 
 
 	}
 

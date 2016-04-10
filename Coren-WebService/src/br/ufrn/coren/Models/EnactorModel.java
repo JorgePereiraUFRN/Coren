@@ -17,6 +17,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import br.ufrn.coren.Exceptions.WidgetNotFoundException;
+import br.ufrn.coren.RestApi.CorenAPI;
 import br.ufrn.coren.Services.HubService;
 import context.arch.discoverer.ComponentDescription;
 import context.arch.discoverer.query.AbstractQueryItem;
@@ -43,9 +45,8 @@ public class EnactorModel {
 	@Column
 	private String name;
 	
-	@OneToOne
-	@JoinColumn(name="WIDGET_ID")
-	private WidgetModel inputWidget;
+	@Column
+	private String widget;
 
 	@OneToOne
 	@JoinColumn(name="OUTCOME_ID")
@@ -71,19 +72,19 @@ public class EnactorModel {
 		this.name = name;
 	}
 	
-	public WidgetModel getInputWidget() {
-		return inputWidget;
+	public String getWidget() {
+		return widget;
 	}
 	
-	public void setInputWidget(WidgetModel inputWidget) {
-		this.inputWidget = inputWidget;
+	public void setWidget(String widget) {
+		this.widget = widget;
 	}
 	
 	public List<ReferenceModel> getReferences() {
 		return references;
 	}
 	
-	public void setReference(List<ReferenceModel> references) {
+	public void setReferences(List<ReferenceModel> references) {
 		this.references = references;
 	}
 	
@@ -96,15 +97,15 @@ public class EnactorModel {
 	}
 	
 	@SuppressWarnings({ "serial", "unchecked" })
-	public <T extends Comparable<? super T>> Enactor createEnactor() {
+	public <T extends Comparable<? super T>> Enactor createEnactor() throws WidgetNotFoundException {
 		
+		WidgetModel inputWidget = CorenAPI.getWidget(widget);
 		ComponentDescription inWidgetStub = inputWidget.createWidgetStub();
 		AbstractQueryItem<?, ?> inWidgetQuery = WidgetXmlParser.createWidgetSubscriptionQuery(inWidgetStub);
 		
 		Widget outputWidget = WidgetModel.createWidget(outcome);
 		Service hubService = new HubService(outputWidget, outcome.getName());
 		outputWidget.addService(hubService);
-		
 		ComponentDescription outWidgetStub = WidgetXmlParser.createWidgetStub(outputWidget);
 		AbstractQueryItem<?, ?> outWidgetQuery = WidgetXmlParser.createWidgetSubscriptionQuery(outWidgetStub);
 		

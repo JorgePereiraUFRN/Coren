@@ -10,6 +10,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 
 import br.ufrn.coren.Controller.CorenFacade;
+import br.ufrn.coren.Exceptions.WidgetNotFoundException;
 import br.ufrn.coren.Models.EnactorModel;
 import br.ufrn.coren.Models.WidgetModel;
 
@@ -26,7 +27,7 @@ public class CorenAPI {
 	public String createWidget(WidgetModel widget) {
 
 		if (widgets.get(widget.getName()) != null) {
-			return "erro: already have a named widget " + widget.getName();
+			return "error: already have a named widget " + widget.getName();
 		}
 
 		String validationMessage = validateWidgetModel(widget);
@@ -43,10 +44,10 @@ public class CorenAPI {
 	@POST
 	@Path("create-enactor")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String createQuery(EnactorModel enactor) {
+	public String createEnactor(EnactorModel enactor) {
 		
 		if (enactors.get(enactor.getName()) != null) {
-			return "erro: already have a named enactor " + enactor.getName();
+			return "error: already have a named enactor " + enactor.getName();
 		}
 
 		String validationMessage = validateEnactorModel(enactor);
@@ -54,9 +55,13 @@ public class CorenAPI {
 			return validationMessage;
 		}
 
-		
-		facade.createEnactor(enactor);
-		enactors.put(enactor.getName(), enactor);
+		try {
+			facade.createEnactor(enactor);
+			enactors.put(enactor.getName(), enactor);
+		} catch (WidgetNotFoundException wnfe) {
+			wnfe.printStackTrace();
+			return "error: " + wnfe.getMessage();
+		}
 		return "success";
 	}
 	
@@ -66,6 +71,13 @@ public class CorenAPI {
 	
 	private String validateEnactorModel(EnactorModel widget) {
 		return "success";
+	}
+	
+	public static WidgetModel getWidget(String name) throws WidgetNotFoundException {
+		if(!widgets.containsKey(name)) {
+			throw new WidgetNotFoundException();
+		}
+		return widgets.get(name);
 	}
 	
 	

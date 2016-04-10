@@ -9,7 +9,7 @@ public class EnactorModel {
 	
 	private String name;
 	
-	private WidgetModel inputWidget;
+	private String widget;
 
 	private OutcomeModel outcome;
 	
@@ -23,19 +23,19 @@ public class EnactorModel {
 		this.name = name;
 	}
 	
-	public WidgetModel getInputWidget() {
-		return inputWidget;
+	public String getWidget() {
+		return widget;
 	}
 	
-	public void setInputWidget(WidgetModel inputWidget) {
-		this.inputWidget = inputWidget;
+	public void setWidget(String widget) {
+		this.widget = widget;
 	}
 	
 	public List<ReferenceModel> getReferences() {
 		return references;
 	}
 	
-	public void setReference(List<ReferenceModel> references) {
+	public void setReferences(List<ReferenceModel> references) {
 		this.references = references;
 	}
 	

@@ -8,12 +8,10 @@ import javax.ws.rs.core.MediaType;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 
-import br.ufrn.coren.Models.AttributeModel;
 import br.ufrn.coren.Models.EnactorModel;
 import br.ufrn.coren.Models.OutcomeModel;
 import br.ufrn.coren.Models.QueryModel;
 import br.ufrn.coren.Models.ReferenceModel;
-import br.ufrn.coren.Models.WidgetModel;
 
 public class QueryCreator {
 	
@@ -44,22 +42,9 @@ public class QueryCreator {
 		
 		WebResource resource = client.resource("http://localhost:8080/Coren-WebService/context/create-enactor");
 		
-		List<AttributeModel<?>> atts = new ArrayList<AttributeModel<?>>();
-		AttributeModel<Integer> temperatura = new AttributeModel<Integer>();
-		temperatura.setType("int");
-		temperatura.setName("temperatura");
-		atts.add(temperatura);
-		AttributeModel<Integer> presenca = new AttributeModel<Integer>();
-		presenca.setType("int");
-		presenca.setName("presenca");
-		atts.add(presenca);
-		WidgetModel widget = new WidgetModel();
-		widget.setName("RoomWidget");
-		widget.setAttributes(atts);
-		
 		EnactorModel enactor = new EnactorModel();
 		enactor.setName("RoomEnactor");
-		enactor.setInputWidget(widget);
+		enactor.setWidget("RoomWidget");
 		OutcomeModel outcome = new OutcomeModel();
 		outcome.setName("lampada");
 		outcome.setType("string");
@@ -92,7 +77,7 @@ public class QueryCreator {
 		lightOn.setValue("(ELSE (QUERY lightOff) )");
 		on.setQuery(lightOn);
 		references.add(on);
-		enactor.setReference(references);
+		enactor.setReferences(references);
 		
 		String message = resource.type(MediaType.APPLICATION_JSON).post(String.class, enactor);
 		
