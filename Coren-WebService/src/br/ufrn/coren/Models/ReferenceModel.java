@@ -9,7 +9,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement
 @Entity
 @Table(name="REFERENCE")
 @SequenceGenerator(name="REFERENCE_SEQUENCE", sequenceName="REFERENCE_SEQUENCE", allocationSize=1, initialValue=0)
