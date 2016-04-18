@@ -1,18 +1,24 @@
 package br.ufrn.coren.RestApi;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.faces.el.ReferenceSyntaxException;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import br.ufrn.coren.Controller.CorenFacade;
 import br.ufrn.coren.Exceptions.WidgetNotFoundException;
 import br.ufrn.coren.Models.EnactorModel;
+import br.ufrn.coren.Models.ReferenceModel;
 import br.ufrn.coren.Models.WidgetModel;
 import context.arch.enactor.Enactor;
 import context.arch.widget.Widget;
@@ -23,6 +29,8 @@ public class CorenAPI {
 	private CorenFacade facade = new CorenFacade();
 	private static Map<String, Widget> widgets = Collections.synchronizedMap(new HashMap<String, Widget>());
 	private static Map<String, Enactor> enactors = Collections.synchronizedMap(new HashMap<String, Enactor>());
+	private static List<WidgetModel> widgetsModel = Collections.synchronizedList(new ArrayList<WidgetModel>());
+	private static List<ReferenceModel> references = Collections.synchronizedList(new ArrayList<ReferenceModel>());
 	
 	@POST
 	@Path("create-widget")
@@ -41,6 +49,7 @@ public class CorenAPI {
 
 		Widget widget = facade.createWidget(widgetModel);
 		widgets.put(widgetModel.getName(), widget);
+		widgetsModel.add(widgetModel);
 		return "success";
 	}
 
@@ -65,6 +74,8 @@ public class CorenAPI {
 			wnfe.printStackTrace();
 			return "error: " + wnfe.getMessage();
 		}
+		
+		references.addAll(enactorModel.getReferences());
 		return "success";
 	}
 	
@@ -77,6 +88,23 @@ public class CorenAPI {
 		widgets.get(widget).updateData(attribute, value);
 		return "success";
 	}
+	
+	@GET
+	@Path("list-queries")
+	@Produces(MediaType.APPLICATION_JSON)
+	public  ReferenceModel[] listQueries(){
+		return references.toArray(new ReferenceModel[references.size()]);
+	}
+	
+	@GET
+	@Path("list-entities")
+	@Produces(MediaType.APPLICATION_JSON)
+	public WidgetModel[] listEntities(){
+		return widgetsModel.toArray(new WidgetModel[widgetsModel.size()]);
+		
+	}
+	
+	
 	
 	private String validateWidgetModel(WidgetModel widget) {
 		return "success";

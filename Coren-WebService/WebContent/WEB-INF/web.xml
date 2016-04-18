@@ -27,6 +27,6 @@
   </welcome-file-list>
   
   <listener>
-   <listener-class>br.ufrn.coren.Listeners.DiscoveverListener</listener-class>
-</listener>
+    <listener-class>br.ufrn.coren.Listeners.DiscoveverListener</listener-class>
+  </listener>
 </web-app>
