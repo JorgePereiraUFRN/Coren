@@ -18,13 +18,13 @@ import br.ufrn.contextanalyzer.api.entities.WidgetEntity;
 
 public class Main {
 	
-	private static Client client = Client.create();
+	private static final Client client = Client.create();
+	private static final String SERVER_IP = "192.168.0.100";
+	private static final String CALLBACK_IP = "192.168.0.101";
 	
 	public static void createWidget() {
-
-		Client client = Client.create();
 		
-		WebResource resource = client.resource("http://localhost:8080/ContextAnalyzer/api/widget/create");
+		WebResource resource = client.resource("http://" + SERVER_IP + ":8080/ContextAnalyzer/api/widget/create");
 
 		List<AttributeEntity> atts1 = new ArrayList<AttributeEntity>();		
 		AttributeEntity presenca = new AttributeEntity();
@@ -54,7 +54,7 @@ public class Main {
 	
 	public static void createEnactor(){
 		
-		WebResource resource = client.resource("http://localhost:8080/ContextAnalyzer/api/enactor/create");
+		WebResource resource = client.resource("http://" + SERVER_IP + ":8080/ContextAnalyzer/api/enactor/create");
 		
 		EnactorEntity enactor = new EnactorEntity();
 		enactor.setName("RoomEnactor");
@@ -105,14 +105,14 @@ public class Main {
 		Random r = new Random(0);
 		while(true) {
 			if(r.nextBoolean()) {
-				WebResource resource = client.resource("http://localhost:8080/ContextAnalyzer/api/widget/update/PresenceWidget");
+				WebResource resource = client.resource("http://" + SERVER_IP + ":8080/ContextAnalyzer/api/widget/update/PresenceWidget");
 				AttributeEntity att = new AttributeEntity();
 				att.setName("presence");
 				att.setValue(String.valueOf(r.nextInt(2)));
 				att.setType("int");
 				resource.put(att);
 			} else {
-				WebResource resource = client.resource("http://localhost:8080/ContextAnalyzer/api/widget/update/BrightnessWidget");
+				WebResource resource = client.resource("http://" + SERVER_IP + ":8080/ContextAnalyzer/api/widget/update/BrightnessWidget");
 				AttributeEntity att = new AttributeEntity();
 				att.setName("brightness");
 				att.setValue(String.valueOf(r.nextInt(200)));
@@ -131,7 +131,7 @@ public class Main {
 	}
 
 	public static void subscribe() throws ComunicationException, TopicDoesNotExistException {
-		ConcreteSubscriber subscriber = new ConcreteSubscriber("light_light", "http://localhost:8080/ContextAnalyzer/hub/topic","127.0.0.1");
+		ConcreteSubscriber subscriber = new ConcreteSubscriber("light_light", "http://" + SERVER_IP + ":8080/ContextAnalyzer/hub/topic", CALLBACK_IP );
 		subscriber.subscribe();
 	}
 	
@@ -139,18 +139,6 @@ public class Main {
 		createWidget();
 		createEnactor();
 		Thread t = new Thread() {
-			public void run() {
-				try {
-					subscribe();
-				} catch (ComunicationException e) {
-					e.printStackTrace();
-				} catch (TopicDoesNotExistException e) {
-					e.printStackTrace();
-				}
-		    }
-		};
-		t.start();
-		t = new Thread() {
 			public void run() {
 				try {
 					subscribe();
