@@ -1,4 +1,4 @@
-package br.ufrn.contextanalyzer.demos.room_app;
+package br.ufrn.contextanalyzer.demos.evaluation;
 
 import java.util.Random;
 
@@ -9,9 +9,9 @@ import br.ufrn.contextanalyzer.api.entities.AttributeEntity;
 
 public class Avaliacao2_Passo3_InformationProvider_Update {
 	
-//	private static final String SERVER_IP = "192.168.0.100";
-	private static final String SERVER_IP = "localhost";
-	private static final int LOOP = 5;
+	private static final String SERVER_IP = "192.168.0.100";
+//	private static final String SERVER_IP = "localhost";
+	private static final int LOOP = 1;
 	
 	public static void main(String[] args) {
 		

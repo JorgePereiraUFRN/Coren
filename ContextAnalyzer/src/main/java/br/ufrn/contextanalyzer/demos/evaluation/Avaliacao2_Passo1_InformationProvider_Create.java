@@ -1,4 +1,4 @@
-package br.ufrn.contextanalyzer.demos.room_app;
+package br.ufrn.contextanalyzer.demos.evaluation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +17,8 @@ import br.ufrn.contextanalyzer.api.entities.WidgetEntity;
 
 public class Avaliacao2_Passo1_InformationProvider_Create {
 	
-//	private static final String SERVER_IP = "192.168.0.100";
-	private static final String SERVER_IP = "localhost";
+	private static final String SERVER_IP = "192.168.0.100";
+//	private static final String SERVER_IP = "localhost";
 	
 	public static void main(String[] args) {
 		

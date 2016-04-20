@@ -1,4 +1,4 @@
-package br.ufrn.contextanalyzer.demos.room_app;
+package br.ufrn.contextanalyzer.demos.evaluation;
 
 import java.util.ArrayList;
 import java.util.List;

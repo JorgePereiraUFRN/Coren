@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufrn.contextanalyzer.demos.room_app;
+package br.ufrn.contextanalyzer.demos.test;
 
 import java.util.Random;
 
@@ -25,13 +25,21 @@ public abstract class AbstractSubscriber implements TreatMessage {
     recebe como parametro no contrutor o identificador do topico no qual deseja se subscrever
     a url do hub e o endere�o ip da m�quina no qual o subscriber est� sendo executado
     */
-    public AbstractSubscriber(String topic, String uriHub, String ipAddress) {
+    public AbstractSubscriber(String topic, String uriHub, String ipAddress, Integer port) {
         TopicEntity t = new TopicEntity();
         t.setName(topic);
-        subscribe.setPort(new Random().nextInt(60000) + 1025);
-        subscribe.setAddress(ipAddress);
-        this.uriHub = uriHub;
-        this.topic = topic;
+        try {
+        	if(port == null) {
+        		port = new Random().nextInt(60000) + 1025;
+        	}
+        	subscribe.setPort(port);
+            subscribe.setAddress(ipAddress);
+            this.uriHub = uriHub;
+            this.topic = topic;
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
+        
     }
 
     /*m�todo respos�vel por solicitar a subscri��o em um t�pico ao hub, o identificador do t�pico no qual

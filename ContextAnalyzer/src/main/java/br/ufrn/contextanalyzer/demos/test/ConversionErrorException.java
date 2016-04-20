@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufrn.contextanalyzer.demos.room_app;
+package br.ufrn.contextanalyzer.demos.test;
 
 /**
  *

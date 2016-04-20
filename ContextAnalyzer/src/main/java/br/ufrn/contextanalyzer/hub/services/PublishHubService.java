@@ -40,7 +40,9 @@ public class PublishHubService extends Service {
 	public DataObject execute(ServiceInput serviceInput) {
 		for (Attribute att : serviceInput.getInput().values()) {
 			String idTopic = widgetClassname + "_" + att.getName();
-			String value = serviceInput.getInput().getAttributeValue(att.getName());
+			String value = serviceInput.getInput().getAttributeValue(att.getName()).toString();
+			
+			System.out.println("publish  " + widgetClassname + "_" + att.getName() + " = " + value);
 			try {
 				HubFacade.publish(idTopic, value);
 			} catch (TopicNotFoundException e) {

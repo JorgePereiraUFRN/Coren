@@ -1,4 +1,4 @@
-package br.ufrn.contextanalyzer.demos.room_app;
+package br.ufrn.contextanalyzer.demos.test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +19,10 @@ import br.ufrn.contextanalyzer.api.entities.WidgetEntity;
 public class Main {
 	
 	private static final Client client = Client.create();
-	private static final String SERVER_IP = "192.168.0.100";
-	private static final String CALLBACK_IP = "192.168.0.101";
+//	private static final String SERVER_IP = "192.168.0.100";
+//	private static final String CALLBACK_IP = "192.168.0.101";
+	private static final String SERVER_IP = "localhost";
+	private static final String CALLBACK_IP = "127.0.0.1";
 	
 	public static void createWidget() {
 		
@@ -131,13 +133,13 @@ public class Main {
 	}
 
 	public static void subscribe() throws ComunicationException, TopicDoesNotExistException {
-		ConcreteSubscriber subscriber = new ConcreteSubscriber("light_light", "http://" + SERVER_IP + ":8080/ContextAnalyzer/hub/topic", CALLBACK_IP );
+		ConcreteSubscriber subscriber = new ConcreteSubscriber("4light_4light", "http://" + SERVER_IP + ":8080/ContextAnalyzer/hub/topic", CALLBACK_IP );
 		subscriber.subscribe();
 	}
 	
 	public static void main(String[] args) {
-		createWidget();
-		createEnactor();
+//		createWidget();
+//		createEnactor();
 		Thread t = new Thread() {
 			public void run() {
 				try {
@@ -150,7 +152,7 @@ public class Main {
 		    }
 		};
 		t.start();
-		updateWidget();
+//		updateWidget();
 	}
 
 }
