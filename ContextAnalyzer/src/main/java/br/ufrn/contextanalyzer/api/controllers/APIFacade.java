@@ -29,6 +29,10 @@ public class APIFacade {
 		WidgetService.getInstance().updateWidget(widget, attributeEntity);;
 	}
 	
+	public static <T extends Comparable<? super T>> void updateWidgetAll(String widget, AttributeEntity[] attributesEntity) throws EntityNotFoundException, TopicNotFoundException {
+		WidgetService.getInstance().updateWidgetAll(widget, attributesEntity);;
+	}
+	
 	public static Widget getMemoryWidget(String name) throws EntityNotFoundException{
 		return WidgetService.getInstance().getMemoryWidget(name);
 	}

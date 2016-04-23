@@ -109,5 +109,17 @@ public class WidgetEntity {
 			attributes.set(index, att);
 		}
 	}
+	
+	public void updateAttributesValue(AttributeEntity[] attributesEntity) {
+		for (AttributeEntity attributeEntity : attributesEntity) {
+			int index = attributes.indexOf(attributeEntity);
+			if (index >= 0) {
+				AttributeEntity att = attributes.get(index);
+				att.setValue(attributeEntity.getValue());
+				att.getAttributeEntityHistory().add(new AttributeEntityHistory(attributeEntity.getValue()));
+				attributes.set(index, att);
+			}
+		}
+	}
 
 }

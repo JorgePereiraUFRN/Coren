@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.filter.LoggingFilter;
 
 
 public class RoomAPP {
@@ -19,30 +20,26 @@ public class RoomAPP {
 
 	public static void main(String[] args) {
 		
+//		client.addFilter(new LoggingFilter(System.out));
+		
 		Departament app = new Departament("IMD");
 		
 		JFrame frame = new JFrame("Estudo de Caso - Context Analyzer");
 		frame.setLayout(new GridLayout(1, 2));
 		frame.add(app.ui);
 		
-		JPanel panelControl = new JPanel();
-		panelControl.setLayout(new GridLayout(2, 2));
-		panelControl.add(app.room1.ui.control);
-		panelControl.add(app.room2.ui.control);
-		panelControl.add(app.room3.ui.control);
-		panelControl.add(app.room4.ui.control);
-		frame.add(panelControl);
+		JPanel panelDashboard = new JPanel();
+		panelDashboard.setLayout(new GridLayout(2, 2));
+		panelDashboard.add(app.room1.ui.dashboard);
+		panelDashboard.add(app.room2.ui.dashboard);
+		panelDashboard.add(app.room3.ui.dashboard);
+		panelDashboard.add(app.room4.ui.dashboard);
+		frame.add(panelDashboard);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(new Dimension(1000, 650));
 		frame.setLocationRelativeTo(null); // center of screen
 		frame.setVisible(true);
-		
-		
-//		setTitle("Room Control - " + room);
-//		setSize(new Dimension(200, 250));
-//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);			
-//		setVisible(true);
 
 	}
 

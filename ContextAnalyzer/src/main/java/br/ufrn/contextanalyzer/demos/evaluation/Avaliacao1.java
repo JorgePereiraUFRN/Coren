@@ -50,8 +50,8 @@ public class Avaliacao1 {
 		int numberWidgets = 20;
 		int numberAttributes = 5;
 		String ipServer = "192.168.0.100";
-		int numberThreads = 1000;
-		int numberLoopAttributes = 10;
+		int numberThreads = 800;
+		int numberLoopAttributes = 50;
 		
 //		Avaliacao1 av = new Avaliacao1(numberWidgets, numberAttributes, ipServer);
 		Avaliacao1 av = new Avaliacao1(numberWidgets, numberAttributes, numberThreads, numberLoopAttributes, ipServer);
@@ -120,10 +120,13 @@ public class Avaliacao1 {
 	}
 	
 	public void updateRandomWidgets() {
+		Long inicio = System.currentTimeMillis();
 		for(int i = 0; i < numberThreads; i++) {
 			Thread t = new Thread(new UpdateRandomWidget());
 			t.start();
 		}
+		Long fim = System.currentTimeMillis();
+		System.out.println("Tempo de criacao das threads: " + (fim - inicio));
 	}
 	
 	private class UpdateRandomWidget implements Runnable {
@@ -140,10 +143,7 @@ public class Avaliacao1 {
 				int indexAttribute = random.nextInt(numberAttributes);
 				AttributeEntity att = widget.getAttributes().get(indexAttribute);
 				att.setValue(String.valueOf(random.nextInt(100)));
-				Long inicio = System.currentTimeMillis();
 				resource.put(att);
-				Long fim = System.currentTimeMillis();
-				System.out.println(fim - inicio);
 			}
 		}
 

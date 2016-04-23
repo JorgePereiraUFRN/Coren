@@ -164,7 +164,7 @@ public class Room {
 		outcomeOn.setName(room + "light");
 		outcomeOn.setType("int");
 		outcomeOn.setDescription(room + " light");
-		outcomeOn.setValue("7 * Math.pow(125 - brightness, 0.33) / Math.pow(125, 0.33)");
+		outcomeOn.setValue("7 * Math.pow(128 - brightness, 0.33) / Math.pow(128, 0.33)");
 		on.setOutcome(outcomeOn);
 		QueryEntity lightOn = new QueryEntity();
 		lightOn.setNome("lightOn");
@@ -181,7 +181,7 @@ public class Room {
 	public class RoomUI extends JPanel {
 		
 		private BufferedImage roomImage;
-		public Controler control;
+		public Dashboard dashboard;
 		
 		public RoomUI() {
 			try {
@@ -206,7 +206,7 @@ public class Room {
 				e.printStackTrace();
 			}
 			
-			control = new Controler();
+			dashboard = new Dashboard();
 			
 			new Thread() {
 				@Override
@@ -240,7 +240,7 @@ public class Room {
 	    }
 	}
 	
-	public class Controler extends JPanel {
+	public class Dashboard extends JPanel {
 		
 		private float fontSize = 10f;
 		private JCheckBox presenceCheckBox;
@@ -248,8 +248,8 @@ public class Room {
 		private JSpinner temperatureSpinner;
 		private JSlider brightnessSlider;
 		
-		public Controler() {			
-			setBorder(BorderFactory.createTitledBorder("Room Control - " + room));
+		public Dashboard() {			
+			setBorder(BorderFactory.createTitledBorder("Dashboard - Room " + room));
 		    setLayout(new GridLayout(4, 2));
 		    add(new JLabel("Presence") {{ setFont(getFont().deriveFont(fontSize)); }});
 		    add(presenceCheckBox = new JCheckBox() {{
@@ -275,7 +275,7 @@ public class Room {
 						att.setName("presence");
 						att.setValue(String.valueOf(presenceCheckBox.isSelected()));
 						att.setType("boolean");
-						resource.put(att);
+						resource.type(MediaType.APPLICATION_JSON).put(att);
 					}
 				});
 			}});
@@ -299,7 +299,7 @@ public class Room {
 						att.setName("fire");
 						att.setValue(String.valueOf(fireCheckBox.isSelected()));
 						att.setType("boolean");
-						resource.put(att);
+						resource.type(MediaType.APPLICATION_JSON).put(att);
 					}
 				});
 			}});
@@ -314,12 +314,12 @@ public class Room {
 						att.setName("temperature");
 						att.setValue(String.valueOf(temperatureSpinner.getValue()));
 						att.setType("int");
-						resource.put(att);
+						resource.type(MediaType.APPLICATION_JSON).put(att);
 					}
 				});
 			}});
 			add(new JLabel("Brightness") {{ setFont(getFont().deriveFont(fontSize)); }});
-			add(brightnessSlider = new JSlider(new DefaultBoundedRangeModel(0, 0, 0, 125)) {{
+			add(brightnessSlider = new JSlider(new DefaultBoundedRangeModel(0, 0, 0, 128)) {{
 				addChangeListener(new ChangeListener() {
 					@Override
 					public void stateChanged(ChangeEvent evt) {
@@ -330,7 +330,7 @@ public class Room {
 						att.setName("brightness");
 						att.setValue(String.valueOf(brightness));
 						att.setType("int");
-						resource.put(att);
+						resource.type(MediaType.APPLICATION_JSON).put(att);
 					}
 				});
 			}});

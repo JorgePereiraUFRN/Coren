@@ -73,6 +73,25 @@ public class WidgetService {
 	
 	}
 	
+	public void updateWidgetAll(String widget, AttributeEntity[] attributesEntity) throws EntityNotFoundException, TopicNotFoundException {
+		
+		if(widgets.get(widget) == null) {
+			throw new EntityNotFoundException();
+		}
+		
+		for (AttributeEntity attributeEntity : attributesEntity) {
+			AttributeNameValue<?> att = attributeEntity.toAttributeNameValue();
+			widgets.get(widget).updateData(att.getName(), att.getValue());
+			
+			HubFacade.publish(widget + "_" + attributeEntity.getName(), String.valueOf(attributeEntity.getValue()));
+		}
+		
+		WidgetEntity widgetEntity = dao.findByName(widget);
+		widgetEntity.updateAttributesValue(attributesEntity);
+		dao.update(widgetEntity);
+	
+	}
+	
 	public Widget getMemoryWidget(String name) throws EntityNotFoundException {
 		
 		if(widgets.get(name) == null) {

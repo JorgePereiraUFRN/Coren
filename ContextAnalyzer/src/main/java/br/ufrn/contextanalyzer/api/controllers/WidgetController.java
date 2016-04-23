@@ -42,9 +42,26 @@ public class WidgetController {
 	
 	@PUT
 	@Path("update/{widget}")
+	@Consumes(MediaType.APPLICATION_JSON)
 	public String updateWidget(@PathParam("widget") String widget, AttributeEntity attributeEntity) {
 		try {
 			APIFacade.updateWidget(widget, attributeEntity);
+		} catch (EntityNotFoundException e) {
+			e.printStackTrace();
+			return "error: " + e.getMessage();
+		} catch (TopicNotFoundException e) {
+			e.printStackTrace();
+			return "error: " + e.getMessage();
+		}
+		return "updated";
+	}
+	
+	@PUT
+	@Path("updateAll/{widget}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String updateWidgetAll(@PathParam("widget") String widget, AttributeEntity[] attributesEntity) {
+		try {
+			APIFacade.updateWidgetAll(widget, attributesEntity);
 		} catch (EntityNotFoundException e) {
 			e.printStackTrace();
 			return "error: " + e.getMessage();
